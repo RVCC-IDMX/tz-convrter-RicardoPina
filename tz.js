@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const moment = require('moment-timezone');
 
 const yargs = require('yargs');

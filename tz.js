@@ -1,14 +1,16 @@
 const moment = require('moment-timezone');
+
 const yargs = require('yargs');
 
-moment.tz.setDefault('America/New_York');
+const defaultTz = 'America/New_York';
+moment.tz.setDefault(defaultTz);
 
 let targetTimezone;
 
-console.log(yargs.argv);
 const command = yargs.argv._[0];
 const params = yargs.argv;
 
+// Checks if no timezone was passed and returns error
 if (yargs.argv._.length !== 1) {
   console.log('Usage: node tz <timezone> [--format]');
   process.exit(1);
@@ -16,8 +18,11 @@ if (yargs.argv._.length !== 1) {
   targetTimezone = command;
 }
 
+// Checks for --format flag and formats if true, otherwise returns unformatted
 if (params.format) {
-  console.log(`The time at the ${targetTimezone} timezone is ${moment().tz(targetTimezone).format('dddd, MMMM Do YYYY, h:mm:ss a')}`);
+  console.log(`Time here is: ${moment().tz(defaultTz).format('dddd, MMMM Do YYYY, h:mm:ss a')}`);
+  console.log(`The time in ${targetTimezone} is: ${moment().tz(targetTimezone).format('dddd, MMMM Do YYYY, h:mm:ss a')}`);
 } else {
-  console.log(`The time at the ${targetTimezone} timezone is ${moment().tz(targetTimezone).format()}`);
+  console.log(`Time here is: ${moment().tz(defaultTz).format()}`);
+  console.log(`The time in ${targetTimezone} is: ${moment().tz(targetTimezone).format()}`);
 }
